@@ -168,24 +168,53 @@ const MenuSettings = () => {
               </div>
             </div>
 
-            {/* Диеты */}
+            {/* Диеты - мультиселект */}
             <div className="space-y-3">
               <Label className="text-lg font-medium flex items-center">
-                🚫 Диетические ограничения
+                🚫 Диетические ограничения (можно выбрать несколько)
               </Label>
-              <Select value={diet} onValueChange={setDiet}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Выберите диету или ограничения" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="">Без ограничений</SelectItem>
-                  {dietOptions.map((option) => (
-                    <SelectItem key={option} value={option.toLowerCase()}>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {dietOptions.map((option) => (
+                  <div
+                    key={option}
+                    className="flex items-center space-x-2 p-2 border rounded-lg hover:bg-purple-50"
+                  >
+                    <Checkbox
+                      id={`diet-${option}`}
+                      checked={diet.includes(option.toLowerCase())}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          setDiet(
+                            diet
+                              ? `${diet}, ${option.toLowerCase()}`
+                              : option.toLowerCase(),
+                          );
+                        } else {
+                          setDiet(
+                            diet
+                              .split(", ")
+                              .filter((d) => d !== option.toLowerCase())
+                              .join(", "),
+                          );
+                        }
+                      }}
+                    />
+                    <Label
+                      htmlFor={`diet-${option}`}
+                      className="cursor-pointer text-sm"
+                    >
                       {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                    </Label>
+                  </div>
+                ))}
+              </div>
+              {diet && (
+                <div className="mt-2 p-2 bg-purple-50 rounded-lg">
+                  <span className="text-sm text-purple-700">
+                    Выбрано: {diet}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Предпочтения */}
