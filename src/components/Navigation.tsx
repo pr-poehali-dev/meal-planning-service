@@ -22,6 +22,15 @@ const Navigation = () => {
                 Настройки
               </Button>
             </Link>
+            <Link to="/shopping-list">
+              <Button
+                variant="ghost"
+                className="text-gray-700 hover:text-purple-700"
+              >
+                <Icon name="ShoppingCart" className="mr-2 h-4 w-4" />
+                Умная Корзина
+              </Button>
+            </Link>
             <Link to="/ai-menu">
               <Button
                 variant="outline"
